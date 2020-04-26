@@ -20,5 +20,5 @@ resource "aws_instance" "fmt" {
 
 resource "aws_instance" "pre-commit-test" {
   instance_type = "t3a.nano"
-  ami= "ami-085925f297f89fce1"
+  ami           = "ami-085925f297f89fce1"
 }
