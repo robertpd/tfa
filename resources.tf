@@ -12,3 +12,8 @@ resource "aws_instance" "database" {
   ami           = "ami-085925f297f89fce1"
   instance_type = "t3a.nano"
 }
+
+resource "aws_instance" "fmt" {
+  ami = "ami-085925f297f89fce1"
+  instance_type = "t3a.nano"
+}
