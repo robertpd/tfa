@@ -10,7 +10,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-      change_dirs: ${{ git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - }}
+      change_dirs: $( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
     steps:
     - name: 'Checkout'
       uses: actions/checkout@master
