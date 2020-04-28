@@ -1,9 +1,6 @@
 name: 'Terraform GitHub Actions'
 on:
-  push:
-    paths:
-      - '**.tf'
-
+  - push
 jobs:
   job1:
     name: 'Generate list of changes'
