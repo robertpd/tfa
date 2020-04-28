@@ -11,7 +11,7 @@ jobs:
     - id: set-matrix
       run: |
         TERRAFORM_DIRECTORIES=$(git diff --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
-        echo "::warning ::${{TERRAFORM_DIRECTORIES}}"
+        echo "$TERRAFORM_DIRECTORIES"
         echo "::set-output name=matrix::{dir:[${TERRAFORM_DIRECTORIES}]}"
   job2:
     needs: job1
