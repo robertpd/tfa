@@ -15,7 +15,7 @@ jobs:
         TERRAFORM_DIRECTORIES=$(git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' -)
         echo "stuff to echo out"
         echo "$TERRAFORM_DIRECTORIES"
-        echo "::set-output name=matrix::{dir:[${TERRAFORM_DIRECTORIES}]}"
+        echo "::set-output name=matrix::{dir:[$TERRAFORM_DIRECTORIES]}"
   job2:
     needs: job1
     name: 'Run Terraform CI on changes'
