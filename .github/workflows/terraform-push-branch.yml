@@ -10,9 +10,9 @@ jobs:
     steps:
     - id: set-matrix
       run: |
-        terraform_directories=$(git diff --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
-        echo "::warning ::${{terraform_directories}}"
-        echo "::set-output name=matrix::{dir:[${terraform_directories}]}"
+        TERRAFORM_DIRECTORIES=$(git diff --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
+        echo "::warning ::${{$TERRAFORM_DIRECTORIES}}"
+        echo "::set-output name=matrix::{dir:[${TERRAFORM_DIRECTORIES}]}"
   job2:
     needs: job1
     name: 'Run Terraform CI on changes'
