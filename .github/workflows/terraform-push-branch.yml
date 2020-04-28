@@ -9,7 +9,9 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
     - id: set-matrix
-      run: echo "::set-output name=matrix::{dir:['terraform/ec2','terraform/another_ec2']}"
+      run: |
+        terraform_directories=$(git diff --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
+        echo "::set-output name=matrix::{dir:[${terraform_directories}]}"
   job2:
     needs: job1
     name: 'Run Terraform CI on changes'
