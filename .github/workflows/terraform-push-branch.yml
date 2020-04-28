@@ -1,6 +1,9 @@
 name: 'Terraform GitHub Actions'
 on:
-  - push
+  push:
+    paths:
+      - '**.tf'
+
 jobs:
   job1:
     name: 'Generate list of changes'
@@ -11,6 +14,7 @@ jobs:
     - id: set-matrix
       run: |
         terraform_directories=$(git diff --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
+        echo "::warning ::${{terraform_directories}}"
         echo "::set-output name=matrix::{dir:[${terraform_directories}]}"
   job2:
     needs: job1
