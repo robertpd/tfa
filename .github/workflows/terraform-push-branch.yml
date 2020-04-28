@@ -8,6 +8,8 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
+    - name: 'need a name'
+      uses: actions/checkout@v2
     - id: set-matrix
       run: |
         TERRAFORM_DIRECTORIES=$(git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs -L 1 dirname | uniq | paste -sd ',' -)
