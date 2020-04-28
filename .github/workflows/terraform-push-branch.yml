@@ -3,6 +3,7 @@ on:
   - push
 jobs:
   job1:
+    name: 'Generate list of changes'
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -11,7 +12,7 @@ jobs:
       run: echo "::set-output name=matrix::{dir:['terraform/ec2','terraform/another_ec2']}"
   job2:
     needs: job1
-    name: 'Terraform'
+    name: 'Run Terraform CI on changes'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
