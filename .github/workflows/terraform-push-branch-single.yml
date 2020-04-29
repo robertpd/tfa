@@ -15,13 +15,15 @@ jobs:
         echo ${{ github.sha }}
         BIGLETTERS=$( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
         echo $BIGLETTERS
+
       shell: bash
-#    - name: 'Terraform Init'
-#      uses: hashicorp/terraform-github-actions@master
-#      with:
-#        tf_actions_version: 0.11.8
-#        tf_actions_subcommand: 'init'
-#        tf_actions_working_dir: ${{ env.change_dirs }}
+    - name: 'Terraform Init'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.11.8
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: ${{ env.BIGLETTERS }}
+      run: echo ${{ env.BIGLETTERS }}
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #    - name: 'Terraform Validate'
