@@ -22,3 +22,8 @@ resource "aws_instance" "some_change" {
   ami           = "ami-085925f297f89fce1"
   instance_type = "t3a.large"
 }
+
+resource "aws_instance" "tings" {
+  ami           = "ami-085925f297f89fce1"
+  instance_type = "t3a.large"
+}
