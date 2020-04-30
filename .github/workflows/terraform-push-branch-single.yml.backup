@@ -3,6 +3,8 @@ on:
   - push
 jobs:
   job2:
+    env:
+#      TF_LOG: debug
     name: 'Run Terraform CI on changes'
     runs-on: my-own
 #      change_dirs: $( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
@@ -15,15 +17,15 @@ jobs:
         echo ${{ github.sha }}
         BIGLETTERS=$( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
         echo $BIGLETTERS
-
+        ls -l
       shell: bash
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.11.8
         tf_actions_subcommand: 'init'
-        tf_actions_working_dir: ${{ env.BIGLETTERS }}
-      run: echo ${{ env.BIGLETTERS }}
+        tf_actions_working_dir: terraform/another_ec2
+#        tf_actions_working_dir: ${{ env.BIGLETTERS }}
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #    - name: 'Terraform Validate'
