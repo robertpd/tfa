@@ -1,0 +1,38 @@
+name: 'Terraform GitHub Actions'
+on:
+  - push
+jobs:
+  job2:
+    env:
+#      TF_LOG: debug
+    name: 'Run Terraform CI on changes'
+    runs-on: my-own
+#      change_dirs: $( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
+    steps:
+    - name: 'Checkout'
+      uses: actions/checkout@v1
+    - name: "Robs super custom step"
+      run: |
+        echo "keep an eye on the below"
+        echo ${{ github.sha }}
+        BIGLETTERS=$( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
+        echo $BIGLETTERS
+        ls -l
+      shell: bash
+    - name: 'Terraform Init'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.11.8
+        tf_actions_subcommand: 'init'
+        tf_actions_working_dir: terraform/another_ec2
+#        tf_actions_working_dir: ${{ env.BIGLETTERS }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: 'Terraform Validate'
+#      uses: hashicorp/terraform-github-actions@master
+#      with:
+#        tf_actions_version: 0.11.8
+#        tf_actions_subcommand: 'validate'
+#        tf_actions_working_dir: ${{ env.change_dirs }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,63 @@
+name: 'Terraform GitHub Actions'
+on:
+  - push
+jobs:
+  job1:
+    name: 'Generate list of changes'
+    runs-on: my-own
+    outputs:
+      matrix:
+        dir: ${{ steps.set-matrix.outputs.matrix }}
+#      matrix: [ terraform/another_ec2, terraform/ec2 ]
+    steps:
+      - name: 'need a name'
+        uses: actions/checkout@v2
+      - id: set-matrix
+        run: |
+          echo "::set-output name=matrix::[terraform/another_ec2]"
+#          TERRAFORM_DIRECTORIES=$(git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' -)
+#          echo "stuff to echo out"
+#          echo "$TERRAFORM_DIRECTORIES"
+  job2:
+    needs: [job1]
+    env:
+#      TF_LOG: debug
+    name: 'Run Terraform CI on changes'
+    runs-on: my-own
+#      change_dirs: $( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
+    strategy:
+      matrix:
+        dir:
+          [terraform/ec2]
+#          ${{fromJson(needs.job1.outputs.matrix)}}
+#          [terraform/ec2, terraform/another_ec2]
+#      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
+    steps:
+#    - name: 'Checkout'
+#      uses: actions/checkout@v1
+    - name: "Robs super custom step"
+      run: |
+        echo ${{ needs.job1.outputs.matrix }}
+#        echo "keep an eye on the below"
+#        echo ${{ github.sha }}
+#        BIGLETTERS=$( git diff-tree --name-only --no-commit-id -r ${{ github.sha }} '*.tf' | xargs --no-run-if-empty -L 1 dirname | uniq | paste -sd ',' - )
+#        echo $BIGLETTERS
+      shell: bash
+    - name: 'Terraform Init'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.11.8
+        tf_actions_subcommand: 'init'
+#        tf_actions_working_dir: terraform/another_ec2
+        tf_actions_working_dir: ${{ matrix.dir }}
+#        tf_actions_working_dir: ${{ env.BIGLETTERS }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: 'Terraform Validate'
+#      uses: hashicorp/terraform-github-actions@master
+#      with:
+#        tf_actions_version: 0.11.8
+#        tf_actions_subcommand: 'validate'
+#        tf_actions_working_dir: ${{ env.change_dirs }}
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
