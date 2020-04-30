@@ -1,6 +1,8 @@
 name: 'Terraform GitHub Actions'
 on:
-  - pull_request
+  pull_request:
+    paths:
+      - terraform/**/*
 jobs:
   matrix_name:
     name: "Running CI on ${{ matrix.dir }}"
