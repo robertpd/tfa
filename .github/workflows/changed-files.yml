@@ -1,0 +1,14 @@
+name: Changed tf files
+on: push
+jobs:
+  build:
+    name: TF CI
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get file changes
+      id: get_file_changes
+      uses: trilom/file-changes-action@96385226e7e8530961a9bfebcd319aa054e8012c  #v1.2.3
+    - name: file output
+      run: |
+        echo "file output time"
+        cat $HOME/files.json

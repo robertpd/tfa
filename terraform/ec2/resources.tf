@@ -27,3 +27,8 @@ resource "aws_instance" "tf_change" {
   ami           = "ami-085925f297f89fce1"
   instance_type = "t3a.large"
 }
+
+resource "aws_instance" "changed_file" {
+  ami           = "ami-085925f297f89fce1"
+  instance_type = "t3a.large"
+}
