@@ -1,14 +1,16 @@
 name: Changed tf files
 on: push
 jobs:
-  build:
-    name: TF CI
+  build_a_ting:
+    name: Running CI $(basename ${{ matrix.dir }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dir: ["first/dir/changes","something/else/entirely"]
     steps:
-    - name: Get file changes
-      id: get_file_changes
-      uses: trilom/file-changes-action@96385226e7e8530961a9bfebcd319aa054e8012c  #v1.2.3
-    - name: file output
+#    - name: Get file changes
+#      id: get_file_changes
+#      uses: trilom/file-changes-action@96385226e7e8530961a9bfebcd319aa054e8012c  #v1.2.3
+    - name: Run tha jewels
       run: |
-        echo "file output time"
-        cat $HOME/files.json
+        echo "file output $(basename ${{ matrix.dir }}) "
