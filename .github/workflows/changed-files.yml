@@ -2,7 +2,7 @@ name: Changed tf files
 on: push
 jobs:
   build_a_ting:
-    name: Running CI $(basename ${{ matrix.dir }})
+    name: "Running CI ${{ matrix.dir }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
