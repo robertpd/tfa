@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
-    env:
+        env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
     steps:
