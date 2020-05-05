@@ -31,4 +31,7 @@ jobs:
         sudo unzip -o -d ~/.terraform/ /tmp/terraform_${{ env.TERRAFORM_VERSION }}_linux_amd64.zip
 
     - name: Run terraform version check
-      run: terraform --version
+      run: |
+        which -a terraform
+        /usr/local/bin/terraform --version
+        terraform --version
