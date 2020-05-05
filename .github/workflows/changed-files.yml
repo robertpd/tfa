@@ -20,7 +20,6 @@ jobs:
 
     - name: Add terraform to path
       run: |
-        mkdir -p ~/.terraform
         echo "::add-path::~/.terraform"
 
     - name: Instally terraform
