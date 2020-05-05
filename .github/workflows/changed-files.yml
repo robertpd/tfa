@@ -18,13 +18,13 @@ jobs:
         path: ~/.terraform
         key: 0.11.8
 
-#    - name: Add terraform to path
-#      run: |
-#        mkdir -p ~/.terraform
-#        echo "::add-path::~/.terraform"
+    - name: Add terraform to path
+      run: |
+        mkdir -p ~/.terraform
+        echo "::add-path::~/.terraform"
 
     - name: Instally terraform
-      if: steps.cache-terraform-install.outputs.cache-hit != 'true'
+      if: steps.cache-terraform-install.outputs.cache-hit == 'false'
       run: |
         curl -s -S -L -o /tmp/terraform_0.11.8_linux_amd64.zip https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
         sudo unzip -o -d ~/.terraform/ /tmp/terraform_0.11.8_linux_amd64.zip
