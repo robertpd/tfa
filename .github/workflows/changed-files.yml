@@ -32,4 +32,3 @@ jobs:
 
     - name: Run terraform version check
       run: terraform --version
-      working-directory: ${{ matrix.dir }}
