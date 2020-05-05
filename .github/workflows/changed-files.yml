@@ -10,24 +10,29 @@ jobs:
     steps:
     - name: 'check it out'
       uses: actions/checkout@v2
-    - name: delete in built terraform
-      run:
-        sudo rm /usr/local/bin/terraform
+
+#    - name: delete in built terraform
+#      run:
+#        sudo rm /usr/local/bin/terraform
+      
     - name: Cache Terraform Install
       id: cache-terraform-install
       uses: actions/cache@v1
       with:
         path: ~/.terraform
         key: 0.11.8
+
     - name: Add terraform to path
       run: |
         mkdir -p ~/.terraform
         echo "::add-path::~/.terraform"
+
     - name: Instally terraform
       if: steps.cache-terraform-install.outputs.cache-hit != 'true'
       run: |
         curl -s -S -L -o /tmp/terraform_0.11.8_linux_amd64.zip https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
         sudo unzip -o -d ~/.terraform/ /tmp/terraform_0.11.8_linux_amd64.zip
+
     - name: Run terraform version check
       run: terraform --version
       working-directory: ${{ matrix.dir }}
